@@ -1,12 +1,6 @@
 FROM 8av36eo/centos7
 
-ENV SUMMARY="Base image with CentOS 7 and tools used as a base for pentest." \
-    DESCRIPTION="Tools: subDomainsBrute, WhatWeb, censys, FileSensor, BingC, subbrute, N4xD0rk, \
-    dirsearch, OpenDoor, whatwaf, Sublist3r, theHarvester, bugcrowd, dnsrecon, sqlmap." \
-
-LABEL summary="$SUMMARY" \
-      description="$DESCRIPTION" \
-      version="1.0" \
+LABEL version="1.0" \
       maintainer="alaskua.ga"
 
 RUN yum updagte -y \
