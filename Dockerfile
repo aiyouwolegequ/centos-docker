@@ -1,14 +1,15 @@
 FROM 8av36eo/centos7
 
-LABEL version="1.0" \
-      maintainer="alaskua.ga"
+LABEL version="1.1"
 
-RUN yum updagte -y \
-    && yum groupinstall "Development Tools" -y \
-    && rpm --rebuilddb \
+MAINTAINER alaskua.ga
+
+RUN rpm --rebuilddb \
     && rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
     && rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
-    && rpm --quiet --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org \
+    && rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+
+RUN yum -y install epel-release \
     && yum -y install \
         asciidoc \
         autoconf \
@@ -67,9 +68,9 @@ RUN yum updagte -y \
         xmlto \
         zlib \
         zlib-devel \
-    && yum clean all -y
+    && yum clean all
 
-RUN wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py \
+RUN wget "https://bootstrap.pypa.io/get-pip.py" && python get-pip.py \
     && python3 get-pip.py \
     && python -m pip install -U pip \
     && python -m pip install -U distribute \
@@ -82,7 +83,7 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py \
     && locate inittab \
     && rm -rf get-pip.py
 
-RUN wget https://raw.githubusercontent.com/aiyouwolegequ/PentestTools/master/addtools.sh && sh addtools.sh -i \
+RUN wget "https://raw.githubusercontent.com/aiyouwolegequ/PentestTools/master/addtools.sh" && sh addtools.sh -i \
     && rm -rf addtools.sh
     
 CMD [cd /usr/src/pentest/]
