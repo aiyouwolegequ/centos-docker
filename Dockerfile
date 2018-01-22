@@ -12,8 +12,8 @@ LABEL summary="$SUMMARY" \
 RUN yum updagte -y \
     && yum groupinstall "Development Tools" -y \
     && rpm --rebuilddb \
-	&& rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
-	&& rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
+    && rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
+    && rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
     && rpm --quiet --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org \
     && yum -y install \
         asciidoc \
