@@ -79,14 +79,14 @@ RUN yum updagte -y \
 RUN wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py \
     && python3 get-pip.py \
     && python -m pip install -U pip \
-	&& python -m pip install -U distribute \
-	&& python3 -m pip install --upgrade pip \
-	&& python -m pip install pycurl pygments dnspython gevent wafw00f censys selenium BeautifulSoup4 json2html tabulate configparser parse wfuzz feedparser greenlet \
-	&& python3 -m pip install scrapy docopt twisted lxml parsel w3lib cryptography pyopenssl anubis-netsec plecost json2html tabulate \
-	&& easy_install shodan \
-	&& easy_install supervisor \
-	&& updatedb \
-	&& locate inittab \
+    && python -m pip install -U distribute \
+    && python3 -m pip install --upgrade pip \
+    && python -m pip install pycurl pygments dnspython gevent wafw00f censys selenium BeautifulSoup4 json2html tabulate configparser parse wfuzz feedparser greenlet \
+    && python3 -m pip install scrapy docopt twisted lxml parsel w3lib cryptography pyopenssl anubis-netsec plecost json2html tabulate \
+    && easy_install shodan \
+    && easy_install supervisor \
+    && updatedb \
+    && locate inittab \
     && rm -rf get-pip.py
 
 RUN wget https://raw.githubusercontent.com/aiyouwolegequ/PentestTools/master/addtools.sh && sh addtools.sh -i \
