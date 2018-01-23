@@ -1,6 +1,6 @@
 #!/bin/bash
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-shell_version=v1.0
+shell_version=v1.1
 pre_install_version=1.0
 
 dir="/usr/src/pentest/"
@@ -279,7 +279,7 @@ install_tools(){
 update(){
 
 	echo "Check for update..."
-	wget -q --tries=3 --no-check-certificate https://raw.githubusercontent.com/aiyouwolegequ/PentestTools/master/addtools.sh
+	wget -q https://raw.githubusercontent.com/aiyouwolegequ/centos-docker/master/addtools.sh
 	chmod +x addtools.sh
 	local version=`grep shell_version -m1 addtools.sh | awk -F = '{print $2}'`
 
@@ -363,9 +363,7 @@ main(){
 	clear
 	echo "#######################################################################"
 	echo ""
-	echo "Github Pentest Tools收集！！！"
 	echo "addtools $shell_version"
-	echo "Github: https://github.com/aiyouwolegequ/PentestTools"
 	echo ""
 	echo "#######################################################################"
 	pre_check
