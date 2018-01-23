@@ -1,7 +1,7 @@
 FROM centos:7.4.1708
 
 LABEL Docker Version="1.0" \
-      Tools Verson="1.0" \
+      Tools Version="1.0" \
       Maintainer="alaskua.ga"
 
 RUN rpm --rebuilddb \
