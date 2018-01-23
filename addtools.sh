@@ -1,6 +1,6 @@
 #!/bin/bash
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-shell_version=v1.4
+shell_version=v1.5
 pre_install_version=1.0
 
 dir="/usr/src/pentest/"
@@ -215,7 +215,9 @@ install_tools(){
 	if [ ! -d "$dir$a16" ];then
 		mkdir -p $dir$a16
 		wget -O $dir$a16/reverseip.py https://raw.githubusercontent.com/shilewareeq/Vh0s7/master/vh0s7.py
+		cat >> /root/.zshrc<<-EOF
 		alias reverseip="python /usr/src/ReverseIP/reverseip.py"
+		EOF
 	fi
 	
 	source /root/.zshrc
