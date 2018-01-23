@@ -6,8 +6,6 @@ LABEL version="1.5" \
 RUN rpm --rebuilddb \
     && rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
     && rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
-    && rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org \
-    && rpm --import https://raw.githubusercontent.com/aiyouwolegequ/AutoBoom/master/booooom/RPM-GPG-KEY-redhat-release \
     && yum clean all -y \
     && rm -rf /var/cache/yum \
     && yum install deltarpm yum-plugin-fastestmirror yum-utils -q -y \
