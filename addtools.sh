@@ -1,6 +1,6 @@
 #!/bin/bash
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-shell_version=v1.1
+shell_version=v1.2
 pre_install_version=1.0
 
 dir="/usr/src/pentest/"
@@ -69,7 +69,6 @@ pre_install(){
 
 	yum-complete-transaction --cleanup-only -q
 	yum history redo last -q
-    yum install epel-release -y
 	yum install asciidoc autoconf automake bind-utils bzip2 bzip2-devel c-ares-devel curl finger gawk gcc gcc-c++ gettext git glibc-static iproute libcurl-devel libev-devel libevent-devel libffi-devel libstdc++-static libtool libtool-ltdl-devel lsof m2crypto make mlocate ncurses-devel net-tools openssl-devel patch pcre-devel policycoreutils-python ppp psmisc python-devel python-pip python-setuptools python34 python34-devel readline readline-devel ruby ruby-dev rubygems sqlite-devel swig sysstat tar tk-devel tree unzip vim wget xmlto zlib zlib-devel -q -y
 	ldconfig
 

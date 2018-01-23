@@ -1,7 +1,7 @@
 FROM centos:7.4.1708
 
-LABEL Docker Version="1.1" \
-      Tools Version="1.1" \
+LABEL Docker Version="1.2" \
+      Tools Version="1.2" \
       Maintainer="alaskua.ga"
 
 RUN rpm --rebuilddb \
@@ -10,6 +10,7 @@ RUN rpm --rebuilddb \
     && rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org \
     && yum clean all -y \
     && rm -rf /var/cache/yum \
+    && yum install epel-release -q -y \
     && yum install wget git -q -y
 
 RUN wget "https://raw.githubusercontent.com/aiyouwolegequ/centos-docker/master/install_zsh.sh" \
