@@ -1,8 +1,7 @@
 FROM centos:7.4.1708
 
-LABEL Docker Version="1.2" \
-      Tools Version="1.2" \
-      Maintainer="alaskua.ga"
+LABEL version="1.3" \
+      maintainer="alaskua.ga"
 
 RUN rpm --rebuilddb \
     && rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \

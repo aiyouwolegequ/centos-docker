@@ -1,6 +1,6 @@
 #!/bin/bash
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-shell_version=v1.2
+shell_version=v1.3
 pre_install_version=1.0
 
 dir="/usr/src/pentest/"
@@ -84,8 +84,6 @@ pre_install(){
 
 	python -m pip install pycurl pygments dnspython gevent wafw00f censys selenium BeautifulSoup4 json2html tabulate configparser parse wfuzz feedparser greenlet -q
 	python3 -m pip install scrapy docopt twisted lxml parsel w3lib cryptography pyopenssl anubis-netsec plecost json2html tabulate -q
-	easy_install -q shodan
-	easy_install -q supervisor
 	updatedb
 	locate inittab
 	zshalias=`grep -E "anubis | wafw00f" /root/.zshrc`
