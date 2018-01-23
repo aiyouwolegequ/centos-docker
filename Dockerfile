@@ -1,8 +1,8 @@
 FROM 8av36eo/centos7
 
-LABEL version="1.2"
+LABEL version="1.3" 
 
-MAINTAINER alaskua.ga
+LABEL maintainer="alaskua.ga"
 
 RUN rpm --rebuilddb \
     && rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
@@ -13,8 +13,12 @@ RUN yum update -y -q\
     && yum install wget -y -q\
     && yum clean all -q
 
+RUN wget "https://raw.githubusercontent.com/aiyouwolegequ/centos-docker/master/install_zsh.sh" \
+    && sh install_zsh.sh \
+    && rm -rf install_zsh.sh
+
 RUN wget "https://raw.githubusercontent.com/aiyouwolegequ/PentestTools/master/addtools.sh" \
     && sh addtools.sh -i \
     && rm -rf addtools.sh
-    
-CMD [cd /usr/src/pentest/]
+
+WORKDIR /usr/src/pentest/
