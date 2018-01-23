@@ -216,7 +216,7 @@ install_tools(){
 		mkdir -p $dir$a16
 		wget -O $dir$a16/reverseip.py https://raw.githubusercontent.com/shilewareeq/Vh0s7/master/vh0s7.py
 		cat >> /root/.zshrc<<-EOF
-		alias reverseip="python /usr/src/ReverseIP/reverseip.py"
+		alias reverseip="python /usr/src/pentest/ReverseIP/reverseip.py"
 		EOF
 	fi
 	
