@@ -1,14 +1,18 @@
-FROM centos:7.4.1708
+FROM centos:7
 
-LABEL version="1.3" \
+LABEL version="1.4" \
       maintainer="alaskua.ga"
 
 RUN rpm --rebuilddb \
     && rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-7 \
     && rpm --import https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-7 \
     && rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org \
+    && rpm --import https://raw.githubusercontent.com/aiyouwolegequ/AutoBoom/master/booooom/RPM-GPG-KEY-redhat-release \
+    && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release \
+    && rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 \
     && yum clean all -y \
     && rm -rf /var/cache/yum \
+    && yum install deltarpm yum-plugin-fastestmirror yum-utils -q -y \
     && yum install epel-release -q -y \
     && yum install wget git -q -y
 

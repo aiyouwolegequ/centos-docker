@@ -1,6 +1,6 @@
 #!/bin/bash
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-shell_version=v1.3
+shell_version=v1.4
 pre_install_version=1.0
 
 dir="/usr/src/pentest/"
@@ -19,6 +19,7 @@ a12="theHarvester"
 a13="bugcrowd"
 a14="dnsrecon"
 a15="sqlmap"
+a16="ReverseIP"
 
 pre_check(){
 
@@ -54,22 +55,9 @@ pre_install(){
 	rm -rf /var/run/yum.pid
 	yum clean all -q -y
     rm -rf /var/cache/yum
-
-	if [ ! -f "/etc/yum.conf.bak" ]; then
-		cp /etc/yum.conf /etc/yum.conf.bak
-		echo "minrate=1" >> /etc/yum.conf
-		echo "timeout=300" >> /etc/yum.conf
-	fi
-
-	if [ ! -f "/etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release" ];then
-		wget -q https://raw.githubusercontent.com/aiyouwolegequ/AutoBoom/master/booooom/RPM-GPG-KEY-redhat-release -O /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-		rpm --quiet --import /etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-release
-		rpm --quiet --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-	fi
-
 	yum-complete-transaction --cleanup-only -q
 	yum history redo last -q
-	yum install asciidoc autoconf automake bind-utils bzip2 bzip2-devel c-ares-devel curl finger gawk gcc gcc-c++ gettext git glibc-static iproute libcurl-devel libev-devel libevent-devel libffi-devel libstdc++-static libtool libtool-ltdl-devel lsof m2crypto make mlocate ncurses-devel net-tools openssl-devel patch pcre-devel policycoreutils-python ppp psmisc python-devel python-pip python-setuptools python34 python34-devel readline readline-devel ruby ruby-dev rubygems sqlite-devel swig sysstat tar tk-devel tree unzip vim wget xmlto zlib zlib-devel -q -y
+	yum install bind-utils curl iproute lsof mlocate net-tools policycoreutils-python python-devel python-pip python-setuptools python34 python34-devel ruby ruby-dev rubygems sysstat tar vim -q -y
 	ldconfig
 
 	if [ -n $(command -v pip) ] && [ -n $(command -v pip3) ];then
@@ -86,55 +74,6 @@ pre_install(){
 	python3 -m pip install scrapy docopt twisted lxml parsel w3lib cryptography pyopenssl anubis-netsec plecost json2html tabulate -q
 	updatedb
 	locate inittab
-	zshalias=`grep -E "anubis | wafw00f" /root/.zshrc`
-
-	if [ -z "$zshalias" ];then
-		cat >> /root/.zshrc<<-EOF
-		alias wafw00f="wafw00f -r -a -v"
-		alias anubis="anubis -t -ip --with-nmap -r -d"
-		EOF
-	fi
-
-	if [ ! -f "/usr/local/lib/libsodium.so" ];then
-		wget -q --tries=3 -O libsodium.tar.gz https://download.libsodium.org/libsodium/releases/LATEST.tar.gz
-		tar zxvf libsodium.tar.gz
-		pushd libsodium-stable
-		./configure
-		make && make install
-		popd
-		echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
-		ldconfig
-	fi
-
-	if [ ! -d "/usr/include/mbedtls" ];then
-		wget -q --tries=3 https://tls.mbed.org/download/mbedtls-2.6.0-gpl.tgz
-		tar xvf mbedtls-2.6.0-gpl.tgz
-		pushd mbedtls-2.6.0
-		make SHARED=1 CFLAGS=-fPIC
-		make DESTDIR=/usr install
-		popd
-		ldconfig
-	fi
-
-	if [ ! -f "/usr/local/lib/libevent.so" ];then
-		wget -q --tries=3 https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz
-		tar zxvf libevent-2.1.8-stable.tar.gz
-		pushd libevent-2.1.8-stable
-		./configure
-		make && make install
-		popd
-		ldconfig
-	fi
-
-	if [ -z `command -v phantomjs` ];then
-		mkdir -p /usr/src/phantomjs
-		wget -q https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 -O /usr/src/phantomjs/phantomjs.tar.bz2
-		tar xf /usr/src/phantomjs/phantomjs.tar.bz2 -C /usr/src/phantomjs
-		rm -rf /usr/src/phantomjs/phantomjs.tar.bz2
-		ln -s /usr/src/phantomjs/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
-	fi
-
-	rm -rf libsodium* mbedtls* libevent*
 	clear
 	echo "#######################################################################"
 	echo ""
@@ -151,6 +90,17 @@ install_tools(){
 	echo ""
 	echo "#######################################################################"
 	echo "请耐心等待！"
+
+	easy_install -q shodan
+
+	zshalias=`grep -E "anubis | wafw00f" /root/.zshrc`
+
+	if [ -z "$zshalias" ];then
+		cat >> /root/.zshrc<<-EOF
+		alias wafw00f="wafw00f -r -a -v"
+		alias anubis="anubis -t -ip --with-nmap -r -d"
+		EOF
+	fi
 
 	if [ ! -d "$dir$a1" ];then
 		git clone -q https://github.com/lijiejie/subDomainsBrute.git $dir$a1
@@ -262,6 +212,12 @@ install_tools(){
 		EOF
 	fi
 
+	if [ ! -d "$dir$a16" ];then
+		mkdir -p $dir$a16
+		wget -O $dir$a16/reverseip.py https://raw.githubusercontent.com/shilewareeq/Vh0s7/master/vh0s7.py
+		alias reverseip="python /usr/src/ReverseIP/reverseip.py"
+	fi
+	
 	source /root/.zshrc
 	clear
 	echo "#######################################################################"
@@ -300,7 +256,7 @@ update(){
 
 update_tools(){
 
-	for i in `ls /usr/src/pentest/ | cat | xargs`; do
+	for i in $(ls /usr/src/pentest/ | grep -v "ReverseIP" | xargs); do
 		cd /usr/src/pentest/$i
 		git pull origin master
 	done
