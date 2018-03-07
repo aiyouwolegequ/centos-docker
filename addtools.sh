@@ -1,6 +1,6 @@
 #!/bin/bash
 export PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
-shell_version=v1.5
+shell_version=v1.6
 pre_install_version=1.0
 
 dir="/usr/src/pentest/"
@@ -20,6 +20,7 @@ a13="bugcrowd"
 a14="dnsrecon"
 a15="sqlmap"
 a16="ReverseIP"
+a17="WPscan"
 
 pre_check(){
 
@@ -220,6 +221,27 @@ install_tools(){
 		EOF
 	fi
 	
+	if [ ! -d "$dir$a17" ];then
+		curl -sSL https://rvm.io/mpapis.asc | gpg --import -
+		curl -sSL https://get.rvm.io | bash -s stable
+		source ~/.rvm/scripts/rvm
+		echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
+		rvm install 2.5.0
+		rvm use 2.5.0 --default
+		echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+		mkdir -p $dir$a17
+		git clone -q https://github.com/wpscanteam/wpscan.git $dir$a17
+		cd $dir$a17
+		gem install bundler && bundle install --without test
+		cd /usr/src/pentest/wpscan
+		git pull
+		ruby wpscan.rb --update
+		cat >> /root/.zshrc<<-EOF
+		alias wpscan="ruby /usr/src/pentest/WPscan/wpscan.rb"
+		EOF
+		
+	fi
+	
 	source /root/.zshrc
 	clear
 	echo "#######################################################################"
@@ -311,6 +333,8 @@ mainmenu(){
 	echo "$a13"
 	echo "$a14"
 	echo "$a15"
+	echo "$a16"
+	echo "$a17"
 }
 
 main(){
