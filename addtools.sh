@@ -71,10 +71,16 @@ pre_install(){
 		python3 -m pip install -U pip -q
 	fi
 
+	easy_install shodan
 	python -m pip install pycurl pygments dnspython gevent wafw00f censys selenium BeautifulSoup4 json2html tabulate configparser parse wfuzz feedparser greenlet -q
 	python3 -m pip install scrapy docopt twisted lxml parsel w3lib cryptography pyopenssl anubis-netsec plecost json2html tabulate -q
 	updatedb
 	locate inittab
+
+	cat >> /root/.zshrc<<-EOF
+	alias pentest="cd /usr/src/pentest/"
+	EOF
+
 	clear
 	echo "#######################################################################"
 	echo ""
